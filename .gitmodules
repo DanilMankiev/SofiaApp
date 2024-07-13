@@ -1,0 +1,3 @@
+[submodule "SofiaApplication"]
+	path = SofiaApplication
+	url = https://github.com/DanilMankiev/SofiaApplication
