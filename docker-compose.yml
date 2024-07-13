@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  db: 
+    image: postgres
+    restart: always
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=root
+    - POSTGRES_DB=sofia 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5435:5432
+  app:
+    build: 
+      context: ./SofiaApplication
+    depends_on:
+      - db
+      - rabbitmq
+    environment:
+      - PG_PASSWORD=root
+    ports:
+      - 8000:8000
+  
+  notification:
+    build:
+      context: ./Notification
+    depends_on:
+      - rabbitmq
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+volumes:
+  postgres_data:
