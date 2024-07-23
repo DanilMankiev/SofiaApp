@@ -2,7 +2,7 @@
 -- PostgreSQL database cluster dump
 --
 
--- Started on 2024-07-07 03:51:49
+-- Started on 2024-07-23 17:37:46
 
 SET default_transaction_read_only = off;
 
@@ -12,10 +12,6 @@ SET standard_conforming_strings = on;
 --
 -- Roles
 --
-
-CREATE ROLE postgres;
-ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:Z9HGBNIxtSaNnmgyVQukOg==$Tc+lPFRH8P4cNjRHyyD3zrqltYblRvBuKh4Tj3GYLjc=:kFwtYjAGWHmlDQwwls5H0OnZylrfvfaapexp9m3Ub5g=';
-
 --
 -- User Configurations
 --
@@ -44,7 +40,7 @@ ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION
 -- Dumped from database version 16.3 (Debian 16.3-1.pgdg120+1)
 -- Dumped by pg_dump version 16.3
 
--- Started on 2024-07-07 03:51:49
+-- Started on 2024-07-23 17:37:46
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -57,7 +53,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- Completed on 2024-07-07 03:51:50
+-- Completed on 2024-07-23 17:37:47
 
 --
 -- PostgreSQL database dump complete
@@ -76,7 +72,7 @@ SET row_security = off;
 -- Dumped from database version 16.3 (Debian 16.3-1.pgdg120+1)
 -- Dumped by pg_dump version 16.3
 
--- Started on 2024-07-07 03:51:50
+-- Started on 2024-07-23 17:37:47
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -125,7 +121,7 @@ CREATE SEQUENCE public.attributes_value_id_seq
 ALTER SEQUENCE public.attributes_value_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3436 (class 0 OID 0)
+-- TOC entry 3445 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: attributes_value_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -164,7 +160,7 @@ CREATE SEQUENCE public.categories_id_seq
 ALTER SEQUENCE public.categories_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3437 (class 0 OID 0)
+-- TOC entry 3446 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -204,7 +200,7 @@ CREATE SEQUENCE public.companies_id_seq
 ALTER SEQUENCE public.companies_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3438 (class 0 OID 0)
+-- TOC entry 3447 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -268,7 +264,7 @@ CREATE SEQUENCE public.product_attributes_id_seq
 ALTER SEQUENCE public.product_attributes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3439 (class 0 OID 0)
+-- TOC entry 3448 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: product_attributes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -312,7 +308,7 @@ CREATE SEQUENCE public.products_id_seq
 ALTER SEQUENCE public.products_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3440 (class 0 OID 0)
+-- TOC entry 3449 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -350,7 +346,7 @@ CREATE SEQUENCE public.tags_id_seq
 ALTER SEQUENCE public.tags_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3441 (class 0 OID 0)
+-- TOC entry 3450 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -368,14 +364,33 @@ CREATE TABLE public.users (
     name character varying(255),
     email character varying(255),
     phone character varying(20),
-    role character varying(20)
+    role character varying(20),
+    birthdate character varying(20)
 );
 
 
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 3244 (class 2604 OID 16452)
+-- TOC entry 230 (class 1259 OID 32768)
+-- Name: users_tmp; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users_tmp (
+    id text NOT NULL,
+    name character varying(255),
+    email character varying(255),
+    phone character varying(20),
+    role character varying(20),
+    code character varying(10),
+    birthdate character varying(20)
+);
+
+
+ALTER TABLE public.users_tmp OWNER TO postgres;
+
+--
+-- TOC entry 3248 (class 2604 OID 16452)
 -- Name: attributes_value id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -383,7 +398,7 @@ ALTER TABLE ONLY public.attributes_value ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 3240 (class 2604 OID 16403)
+-- TOC entry 3244 (class 2604 OID 16403)
 -- Name: categories id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -391,7 +406,7 @@ ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 3241 (class 2604 OID 16415)
+-- TOC entry 3245 (class 2604 OID 16415)
 -- Name: companies id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -399,7 +414,7 @@ ALTER TABLE ONLY public.companies ALTER COLUMN id SET DEFAULT nextval('public.co
 
 
 --
--- TOC entry 3243 (class 2604 OID 16443)
+-- TOC entry 3247 (class 2604 OID 16443)
 -- Name: product_attributes id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -407,7 +422,7 @@ ALTER TABLE ONLY public.product_attributes ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 3242 (class 2604 OID 16424)
+-- TOC entry 3246 (class 2604 OID 16424)
 -- Name: products id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -415,7 +430,7 @@ ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
--- TOC entry 3245 (class 2604 OID 24620)
+-- TOC entry 3249 (class 2604 OID 24620)
 -- Name: tags id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -423,7 +438,7 @@ ALTER TABLE ONLY public.tags ALTER COLUMN id SET DEFAULT nextval('public.tags_id
 
 
 --
--- TOC entry 3426 (class 0 OID 16449)
+-- TOC entry 3434 (class 0 OID 16449)
 -- Dependencies: 225
 -- Data for Name: attributes_value; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -433,7 +448,7 @@ COPY public.attributes_value (id, productid, attibuteid, value) FROM stdin;
 
 
 --
--- TOC entry 3418 (class 0 OID 16400)
+-- TOC entry 3426 (class 0 OID 16400)
 -- Dependencies: 217
 -- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -446,7 +461,7 @@ COPY public.categories (id, name, parentid) FROM stdin;
 
 
 --
--- TOC entry 3420 (class 0 OID 16412)
+-- TOC entry 3428 (class 0 OID 16412)
 -- Dependencies: 219
 -- Data for Name: companies; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -456,7 +471,7 @@ COPY public.companies (id, name, description, image) FROM stdin;
 
 
 --
--- TOC entry 3429 (class 0 OID 24623)
+-- TOC entry 3437 (class 0 OID 24623)
 -- Dependencies: 228
 -- Data for Name: company_tags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -466,7 +481,7 @@ COPY public.company_tags (tagsid, companyid) FROM stdin;
 
 
 --
--- TOC entry 3430 (class 0 OID 24636)
+-- TOC entry 3438 (class 0 OID 24636)
 -- Dependencies: 229
 -- Data for Name: favorites; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -476,7 +491,7 @@ COPY public.favorites (userid, productid) FROM stdin;
 
 
 --
--- TOC entry 3424 (class 0 OID 16440)
+-- TOC entry 3432 (class 0 OID 16440)
 -- Dependencies: 223
 -- Data for Name: product_attributes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -486,7 +501,7 @@ COPY public.product_attributes (id, name) FROM stdin;
 
 
 --
--- TOC entry 3422 (class 0 OID 16421)
+-- TOC entry 3430 (class 0 OID 16421)
 -- Dependencies: 221
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -496,7 +511,7 @@ COPY public.products (id, title, imagepreview, imageall, description, categoryid
 
 
 --
--- TOC entry 3428 (class 0 OID 24617)
+-- TOC entry 3436 (class 0 OID 24617)
 -- Dependencies: 227
 -- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -506,17 +521,27 @@ COPY public.tags (id, name) FROM stdin;
 
 
 --
--- TOC entry 3416 (class 0 OID 16388)
+-- TOC entry 3424 (class 0 OID 16388)
 -- Dependencies: 215
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, name, email, phone, role) FROM stdin;
+COPY public.users (id, name, email, phone, role, birthdate) FROM stdin;
 \.
 
 
 --
--- TOC entry 3442 (class 0 OID 0)
+-- TOC entry 3439 (class 0 OID 32768)
+-- Dependencies: 230
+-- Data for Name: users_tmp; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users_tmp (id, name, email, phone, role, code, birthdate) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3451 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: attributes_value_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -525,7 +550,7 @@ SELECT pg_catalog.setval('public.attributes_value_id_seq', 1, false);
 
 
 --
--- TOC entry 3443 (class 0 OID 0)
+-- TOC entry 3452 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -534,7 +559,7 @@ SELECT pg_catalog.setval('public.categories_id_seq', 15, true);
 
 
 --
--- TOC entry 3444 (class 0 OID 0)
+-- TOC entry 3453 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: companies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -543,7 +568,7 @@ SELECT pg_catalog.setval('public.companies_id_seq', 1, false);
 
 
 --
--- TOC entry 3445 (class 0 OID 0)
+-- TOC entry 3454 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: product_attributes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -552,7 +577,7 @@ SELECT pg_catalog.setval('public.product_attributes_id_seq', 1, false);
 
 
 --
--- TOC entry 3446 (class 0 OID 0)
+-- TOC entry 3455 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -561,7 +586,7 @@ SELECT pg_catalog.setval('public.products_id_seq', 1, false);
 
 
 --
--- TOC entry 3447 (class 0 OID 0)
+-- TOC entry 3456 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -570,7 +595,7 @@ SELECT pg_catalog.setval('public.tags_id_seq', 1, false);
 
 
 --
--- TOC entry 3261 (class 2606 OID 16456)
+-- TOC entry 3265 (class 2606 OID 16456)
 -- Name: attributes_value attributes_value_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -579,7 +604,7 @@ ALTER TABLE ONLY public.attributes_value
 
 
 --
--- TOC entry 3253 (class 2606 OID 16405)
+-- TOC entry 3257 (class 2606 OID 16405)
 -- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -588,7 +613,7 @@ ALTER TABLE ONLY public.categories
 
 
 --
--- TOC entry 3255 (class 2606 OID 16419)
+-- TOC entry 3259 (class 2606 OID 16419)
 -- Name: companies companies_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -597,7 +622,7 @@ ALTER TABLE ONLY public.companies
 
 
 --
--- TOC entry 3259 (class 2606 OID 16447)
+-- TOC entry 3263 (class 2606 OID 16447)
 -- Name: product_attributes product_attributes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -606,7 +631,7 @@ ALTER TABLE ONLY public.product_attributes
 
 
 --
--- TOC entry 3257 (class 2606 OID 16428)
+-- TOC entry 3261 (class 2606 OID 16428)
 -- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -615,7 +640,7 @@ ALTER TABLE ONLY public.products
 
 
 --
--- TOC entry 3263 (class 2606 OID 24622)
+-- TOC entry 3267 (class 2606 OID 24622)
 -- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -624,7 +649,7 @@ ALTER TABLE ONLY public.tags
 
 
 --
--- TOC entry 3247 (class 2606 OID 16396)
+-- TOC entry 3251 (class 2606 OID 16396)
 -- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -633,7 +658,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3249 (class 2606 OID 16398)
+-- TOC entry 3253 (class 2606 OID 16398)
 -- Name: users users_phone_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -642,7 +667,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3251 (class 2606 OID 16394)
+-- TOC entry 3255 (class 2606 OID 16394)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -651,7 +676,25 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3267 (class 2606 OID 16462)
+-- TOC entry 3269 (class 2606 OID 32774)
+-- Name: users_tmp users_tmp_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_tmp
+    ADD CONSTRAINT users_tmp_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 3271 (class 2606 OID 32776)
+-- Name: users_tmp users_tmp_phone_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users_tmp
+    ADD CONSTRAINT users_tmp_phone_key UNIQUE (phone);
+
+
+--
+-- TOC entry 3275 (class 2606 OID 16462)
 -- Name: attributes_value attributes_value_attibuteid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -660,7 +703,7 @@ ALTER TABLE ONLY public.attributes_value
 
 
 --
--- TOC entry 3268 (class 2606 OID 16457)
+-- TOC entry 3276 (class 2606 OID 16457)
 -- Name: attributes_value attributes_value_productid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -669,7 +712,7 @@ ALTER TABLE ONLY public.attributes_value
 
 
 --
--- TOC entry 3264 (class 2606 OID 16406)
+-- TOC entry 3272 (class 2606 OID 16406)
 -- Name: categories categories_parentid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -678,7 +721,7 @@ ALTER TABLE ONLY public.categories
 
 
 --
--- TOC entry 3269 (class 2606 OID 24631)
+-- TOC entry 3277 (class 2606 OID 24631)
 -- Name: company_tags company_tags_companyid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -687,7 +730,7 @@ ALTER TABLE ONLY public.company_tags
 
 
 --
--- TOC entry 3270 (class 2606 OID 24626)
+-- TOC entry 3278 (class 2606 OID 24626)
 -- Name: company_tags company_tags_tagsid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -696,7 +739,7 @@ ALTER TABLE ONLY public.company_tags
 
 
 --
--- TOC entry 3271 (class 2606 OID 24646)
+-- TOC entry 3279 (class 2606 OID 24646)
 -- Name: favorites favorites_productid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -705,7 +748,7 @@ ALTER TABLE ONLY public.favorites
 
 
 --
--- TOC entry 3272 (class 2606 OID 24641)
+-- TOC entry 3280 (class 2606 OID 24641)
 -- Name: favorites favorites_userid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -714,7 +757,7 @@ ALTER TABLE ONLY public.favorites
 
 
 --
--- TOC entry 3265 (class 2606 OID 16429)
+-- TOC entry 3273 (class 2606 OID 16429)
 -- Name: products products_categoryid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -723,7 +766,7 @@ ALTER TABLE ONLY public.products
 
 
 --
--- TOC entry 3266 (class 2606 OID 16434)
+-- TOC entry 3274 (class 2606 OID 16434)
 -- Name: products products_companyid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -731,13 +774,13 @@ ALTER TABLE ONLY public.products
     ADD CONSTRAINT products_companyid_fkey FOREIGN KEY (companyid) REFERENCES public.companies(id);
 
 
--- Completed on 2024-07-07 03:51:50
+-- Completed on 2024-07-23 17:37:47
 
 --
 -- PostgreSQL database dump complete
 --
 
--- Completed on 2024-07-07 03:51:50
+-- Completed on 2024-07-23 17:37:47
 
 --
 -- PostgreSQL database cluster dump complete
